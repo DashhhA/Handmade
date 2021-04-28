@@ -1,0 +1,25 @@
+FROM node:latest
+
+# set up thw working directory
+RUN mkdir -p /usr/src/handmades
+WORKDIR /usr/src/handmades
+
+# install node packages
+COPY package.json /usr/src/handmades
+RUN npm install
+
+# .env and certs
+RUN mkdir -p /usr/src/handmades/cert/private
+COPY ./build_certs/lh_.env /usr/src/handmades/.env
+COPY ./build_certs/lh_server-crt.pem /usr/src/handmades/cert/server-crt.pem
+COPY ./build_certs/lh_server-key.pem /usr/src/handmades/cert/private/server-key.pem
+
+
+
+# copy project files
+COPY . /usr/src/handmades
+
+EXPOSE 8042
+EXPOSE 8043
+
+CMD node -r dotenv/config server.js

@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Handmades" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/m_teal</item>
+        <item name="colorPrimaryVariant">@color/teal_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/mark</item>
+        <item name="colorSecondaryVariant">@color/teal_light</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@drawable/background</item>
+    </style>
+
+    <style name="AppTheme.Button.Borderless" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:minHeight">24dp</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+    <style name="AppTheme.Text.StandardUI" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Theme.Handmades.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+</resources>

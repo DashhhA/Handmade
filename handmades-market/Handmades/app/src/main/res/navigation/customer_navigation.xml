@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customer_navigation"
+    app:startDestination="@id/customer_stores">
+    <fragment
+        android:id="@id/customer_stores"
+        android:name="com.market.handmades.ui.customer.StoresFragment"
+        android:label="StoresFragment" />
+    <fragment
+        android:id="@id/customer_goods"
+        android:name="com.market.handmades.ui.customer.GoodsFragment"
+        android:label="GoodsFragment" />
+    <fragment
+        android:id="@id/customer_orders"
+        android:name="com.market.handmades.ui.customer.OrdersFragment"
+        android:label="OrdersFragment" />
+    <fragment
+        android:id="@id/customer_messages"
+        android:name="com.market.handmades.ui.customer.MessagesFragment"
+        android:label="MessagesFragment" />
+    <fragment
+        android:id="@id/customer_comments"
+        android:name="com.market.handmades.ui.customer.CommentsFragment"
+        android:label="CommentsFragment" />
+    <fragment
+        android:id="@id/customer_settings"
+        android:name="com.market.handmades.ui.customer.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@id/customer_info"
+        android:name="com.market.handmades.ui.customer.InfoFragment"
+        android:label="InfoFragment" />
+
+</navigation>

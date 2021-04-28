@@ -1,0 +1,29 @@
+{
+  "name": "handmades-server",
+  "version": "0.0.1",
+  "description": "a web socket backend for Handmades app",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.11.7",
+    "nanoid": "^3.1.22",
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

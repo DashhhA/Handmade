@@ -1,0 +1,7 @@
+*.env
+node_modules
+docs
+cert/private
+.eslintrc.yml
+*.log
+files

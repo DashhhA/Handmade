@@ -1,0 +1,5 @@
+KEY_PATH=cert/private/server-key.pem
+CERT_PATH=cert/server-crt.pem
+
+DB_ADDR=mongodb://localhost:27017/routes
+DB_REPLICA_SET=rs0

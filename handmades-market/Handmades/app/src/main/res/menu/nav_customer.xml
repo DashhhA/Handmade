@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/customer_stores"
+        android:title="@string/stores"/>
+    <item
+        android:id="@+id/customer_goods"
+        android:title="@string/goods"/>
+    <item
+        android:id="@+id/customer_orders"
+        android:title="@string/orders"/>
+    <item
+        android:title="@string/social">
+        <menu>
+            <item
+                android:id="@+id/customer_messages"
+                android:title="@string/messages"/>
+            <item
+                android:id="@+id/customer_comments"
+                android:title="@string/comments"/>
+        </menu>
+    </item>
+    <group
+        android:id="@+id/group">
+        <item
+            android:id="@+id/customer_settings"
+            android:title="@string/settings"/>
+        <item
+            android:id="@+id/customer_info"
+            android:title="@string/info"/>
+    </group>
+</menu>

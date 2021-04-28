@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vendor_navigation"
+    app:startDestination="@id/vendor_stores">
+
+
+    <fragment
+        android:id="@id/vendor_stores"
+        android:name="com.market.handmades.ui.vendor.StoresFragment"
+        android:label="@string/v_stores_title" >
+        <action
+            android:id="@+id/action_vendor_stores_to_marketFragment"
+            app:destination="@id/marketFragment" />
+        <action
+            android:id="@+id/action_vendor_stores_to_addMarketFragment"
+            app:destination="@id/addMarketFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMarketFragment"
+        android:name="com.market.handmades.ui.vendor.AddMarketFragment"
+        android:label="AddMarketFragment" />
+    <fragment
+        android:id="@+id/marketFragment"
+        android:name="com.market.handmades.ui.vendor.MarketFragment"
+        android:label="MarketFragment" >
+        <action
+            android:id="@+id/action_marketFragment_to_aboutProductFragment"
+            app:destination="@id/aboutProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutProductFragment"
+        android:name="com.market.handmades.ui.vendor.AboutProductFragment"
+        android:label="AboutProductFragment" />
+</navigation>

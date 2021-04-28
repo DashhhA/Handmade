@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow>
+            <TextView
+                android:text="@string/new_user_type"
+                style="@style/AppTheme.Text.StandardUI"/>
+            <Spinner
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:id="@+id/account_types"/>
+        </TableRow>
+
+        <EditText
+            android:id="@+id/new_usr_fname"
+            android:inputType="textPersonName"
+            android:hint="@string/new_usr_name" />
+
+        <TableRow>
+            <EditText
+                android:id="@+id/new_usr_sname"
+                android:layout_weight="1"
+                android:inputType="textPersonName"
+                android:hint="@string/new_usr_sname" />
+            <EditText
+                android:id="@+id/new_usr_surname"
+                android:layout_weight="1"
+                android:inputType="textPersonName"
+                android:hint="@string/new_usr_surname" />
+        </TableRow>
+
+        <EditText
+            android:layout_marginTop="16dp"
+            android:id="@+id/new_usr_email"
+            android:inputType="textEmailAddress"
+            android:hint="@string/new_usr_email" />
+
+        <EditText
+            android:id="@+id/new_usr_pass"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"
+            android:hint="@string/new_usr_password" />
+
+        <EditText
+            android:id="@+id/new_usr_confirm_pass"
+            android:inputType="textPassword"
+            android:hint="@string/new_usr_confirm_pass" />
+
+        <Button
+            android:id="@+id/new_usr_create"
+            android:text="@string/new_usr_create"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="24dp"
+            />
+
+    </TableLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">Handmades</string>
+
+    <!-- General strings -->
+    <string name="str_cancel">Cancel</string>
+    <string name="str_submit">Submit</string>
+    <string name="str_positive">OK</string>
+    <string name="rubbles">p.</string>
+    <string name="str_should_not_empty">Should not be empty</string>
+
+    <string name="error_wrong_response">Wrong server response</string>
+    <string name="error_dup_key">User already exists</string>
+    <string name="error_dup_key_key">User with this %s already exists</string>
+    <string name="error_user_unauthorized">User unauthorized</string>
+    <string name="error_unknown_server">Server unknown error</string>
+    <string name="error_unknown_connection">Connection unknown error: \n%s</string>
+    <string name="error_no_user">No such user</string>
+    <string name="dup_key_login">login</string>
+    <string name="error_internal">Internal Error</string>
+    <string name="title_failure">Failed</string>
+
+    <!-- Info dialogs -->
+    <string name="title_error">Error</string>
+    <string name="no_connection">No connection to server</string>
+    <string name="button_positive">OK</string>
+
+    <!-- Log in -->
+    <string name="login_title">Log in</string>
+    <string name="login_log_in">enter account</string>
+    <string name="new_acc">create new account</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="remember_me">remember me</string>
+    <string name="create_acc">Create account</string>
+    <string name="login_checking">Logging in</string>
+    <string name="wrong_password">Wrong password</string>
+
+    <!-- New user -->
+    <string name="new_usr_title">New account</string>
+    <string name="new_usr_name">Name</string>
+    <string name="new_usr_sname">Second Name</string>
+    <string name="new_usr_surname">Surname</string>
+    <string name="new_user_type">Account type:</string>
+    <string name="new_usr_email">Email</string>
+    <string name="new_usr_password">Password</string>
+    <string name="new_usr_confirm_pass">Confirm password</string>
+    <string name="new_user_password_error">Password must be longer then 5 characters</string>
+    <string name="new_user_empty_error">Must not be empty</string>
+    <string name="new_usr_create">Create account</string>
+    <string name="error_passwords_mismatch">Passwords must mastch</string>
+    <string name="error_email">Invalid email</string>
+
+    <!-- Customer menu -->
+    <string name="stores">Stores</string>
+    <string name="goods">Goods</string>
+    <string name="orders">Orders</string>
+    <string name="messages">Messages</string>
+    <string name="comments">Comments</string>
+    <string name="settings">Settings</string>
+    <string name="info">Info</string>
+    <string name="social">Social</string>
+
+    <!-- Vendor menu -->
+    <string name="vendor_stores">My Stores</string>
+
+    <!-- Vendor stores fragment -->
+    <string name="v_stores_title">Stores</string>
+
+    <!-- Vendor add market fragment -->
+    <string name="v_add_market_name_hint">Name</string>
+    <string name="v_add_market_descr_prompt">Market description</string>
+    <string name="v_add_market_name_empty">Name should not be empty</string>
+    <string name="v_add_market_descr_empty">Description should not be empty</string>
+
+    <!-- Vendor market fragment -->
+    <string name="market_products">Products</string>
+    <string name="market_about">About</string>
+
+    <!-- Vendor add product activity -->
+    <string name="v_add_product_delete_image">Remove this image?</string>
+    <string name="v_add_product_name_hint">Name</string>
+    <string name="v_add_product_price">Price:</string>
+    <string name="v_add_product_quantity">Quantity:</string>
+    <string name="v_add_product_descr_hint">Description</string>
+    <string name="v_add_product_label">New product</string>
+
+    <!-- Vendor about product -->
+    <string name="v_about_product_code">Code:</string>
+</resources>
