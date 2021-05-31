@@ -34,6 +34,12 @@ abstract class CollectionWatcher <T> (
                         val (k, v) = decodeWithId(raw)
                         respInsert(k, v)
                     }
+                    "update" -> {
+                        val raw: JsonObject = updated.data.updated?.asJsonObject
+                                ?: throw JsonSyntaxException("'updated' must be defined on insert")
+                        val (k, v) = decodeWithId(raw)
+                        respUpdate(k, v)
+                    }
                     "delete" -> {
                         val raw = updated.data.updated?.asJsonObject
                                 ?: throw JsonSyntaxException("'updated' must be defined on remove")
@@ -55,12 +61,13 @@ abstract class CollectionWatcher <T> (
     interface IOnChangeListener<T> {
         fun insert(key: String, obj: T)
         fun delete(key: String)
+        fun update(key: String, obj: T)
         fun refresh(all: Map<String, T>)
         fun error(exception: Exception)
     }
 
     @Throws(JsonSyntaxException::class)
-    abstract fun decode(json: JsonObject): T
+    abstract fun decode(json: JsonObject, key: String): T
 
     fun addOnChangeListener(listener: IOnChangeListener<T>) {
         listeners.add(listener)
@@ -79,30 +86,43 @@ abstract class CollectionWatcher <T> (
 
     @Throws(JsonSyntaxException::class)
     private fun decodeWithId(data: JsonObject): Pair<String, T> {
-        val id: String = data.getAsJsonPrimitive("dbId").asString
-        data.remove("dbId")
-        return id to decode(data)
+        val id: String
+        if (data.has("dbId")) {
+            id = data.getAsJsonPrimitive("dbId").asString
+            data.remove("dbId")
+        } else {
+            id = data.getAsJsonPrimitive("_id").asString
+        }
+        return id to decode(data, id)
     }
 
     private fun respInsert(key: String, obj: T) {
         listeners.forEach { it.insert(key, obj) }
         elements[key] = obj
-        state.value = AsyncResult.Success(elements.values.toList())
+        state.postValue(AsyncResult.Success(elements.values.toList()))
+    }
+
+    private fun respUpdate(key: String, obj: T) {
+        listeners.forEach { it.update(key, obj) }
+        elements[key] = obj
+        state.postValue(AsyncResult.Success(elements.values.toList()))
     }
 
     private fun respDelete(key: String) {
         listeners.forEach { it.delete(key) }
         elements.remove(key)
-        state.value = AsyncResult.Success(elements.values.toList())
+        state.postValue(AsyncResult.Success(elements.values.toList()))
     }
 
     private fun respRefresh(map: Map<String, T>) {
         listeners.forEach { it.refresh(map) }
-        state.value = AsyncResult.Success(map.values.toList())
+        elements.clear()
+        elements.putAll(map)
+        state.postValue(AsyncResult.Success(map.values.toList()))
     }
 
     private fun respError(exception: Exception) {
         listeners.forEach { it.error(exception) }
-        state.value = AsyncResult.Error(exception)
+        state.postValue(AsyncResult.Error(exception))
     }
 }

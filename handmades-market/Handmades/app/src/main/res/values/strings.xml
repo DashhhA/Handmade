@@ -7,6 +7,57 @@
     <string name="str_positive">OK</string>
     <string name="rubbles">p.</string>
     <string name="str_should_not_empty">Should not be empty</string>
+    <string name="str_yes">YES</string>
+    <string name="str_none">none</string>
+    <string name="str_unknown_price">\???</string>
+    <string name="str_sort">Sort</string>
+    <string name="str_filter">Filter</string>
+    <string name="str_empty">empty</string>
+
+    <string name="sort_by_name">By Name</string>
+    <string name="sort_by_price_ascending">By Price Ascending</string>
+    <string name="sort_by_price_descending">By Price Descending</string>
+    <string name="sort_orders_by_recent">Recent</string>
+    <string name="str_from">from</string>
+    <string name="str_to">to</string>
+    <string name="hint_no_limit">No limit</string>
+
+    <string name="selected_filters">Selected filters</string>
+    <string name="add_filter">Add filter</string>
+    <string name="filter_approved">Approved</string>
+    <string name="filter_blocked">Blocked</string>
+    <string name="filter_validating">Validating</string>
+    <string name="filter_by_city">By city</string>
+    <string name="filter_city">City: %s</string>
+    <string name="filter_price_interval">Price interval</string>
+    <string name="filter_price_interval_added">Price from %s to %s</string>
+    <string name="str_unlimited">unlimited</string>
+    <string name="filter_include_tags">Include tags</string>
+    <string name="filter_include_tags_added">Include tags: %s</string>
+    <string name="filter_orders_by_status">By status</string>
+    <string name="filter_select_status">Select status</string>
+    <string name="filter_select_status_added">Status: %s</string>
+    <string name="filter_order_urgent">Urgent</string>
+    <string name="filter_order_gift">Gift wrap</string>
+    <string name="filter_includes_word">Includes word</string>
+    <string name="filter_includes_word_added">Includes word: %s</string>
+    <string name="filter_includes_word_word_title">Word</string>
+
+    <string name="market_status_validating">validating</string>
+    <string name="market_status_approved">approved</string>
+    <string name="market_status_blocked">blocked</string>
+
+    <string name="order_status_posted">posted</string>
+    <string name="order_status_await_pay">awaiting payment</string>
+    <string name="order_status_paid">paid</string>
+    <string name="order_status_shipped">shipped</string>
+    <string name="order_status_delivered">delivered</string>
+
+    <string name="user_role_customer">customer</string>
+    <string name="user_role_vendor">vendor</string>
+    <string name="user_role_admin">admin</string>
+    <string name="user_role_moderator">moderator</string>
+    <string name="user_role_form">%s (%s)</string>
 
     <string name="error_wrong_response">Wrong server response</string>
     <string name="error_dup_key">User already exists</string>
@@ -18,6 +69,7 @@
     <string name="dup_key_login">login</string>
     <string name="error_internal">Internal Error</string>
     <string name="title_failure">Failed</string>
+    <string name="object_deleted">Object has been deleted</string>
 
     <!-- Info dialogs -->
     <string name="title_error">Error</string>
@@ -59,22 +111,37 @@
     <string name="settings">Settings</string>
     <string name="info">Info</string>
     <string name="social">Social</string>
+    <string name="cart">Cart</string>
 
     <!-- Vendor menu -->
     <string name="vendor_stores">My Stores</string>
+    <string name="vendor_orders">Orders</string>
+
+    <!-- Admin menu -->
+    <string name="admin_stores">Stores</string>
+    <string name="admin_all_comments">All comments</string>
+    <string name="admin_products">Comments by products</string>
 
     <!-- Vendor stores fragment -->
     <string name="v_stores_title">Stores</string>
+    <string name="v_stores_status">status: </string>
 
     <!-- Vendor add market fragment -->
     <string name="v_add_market_name_hint">Name</string>
+    <string name="v_add_market_city_hint">City</string>
     <string name="v_add_market_descr_prompt">Market description</string>
+    <string name="v_add_market_tags">Tags</string>
+    <string name="v_add_market_edit_tags_title">Edit tags</string>
+    <string name="v_add_market_add_tag_title">Add tag</string>
     <string name="v_add_market_name_empty">Name should not be empty</string>
+    <string name="v_add_market_city_empty">City should not be empty</string>
     <string name="v_add_market_descr_empty">Description should not be empty</string>
 
     <!-- Vendor market fragment -->
     <string name="market_products">Products</string>
     <string name="market_about">About</string>
+    <string name="market_location">Location: </string>
+    <string name="market_tags">Tags: </string>
 
     <!-- Vendor add product activity -->
     <string name="v_add_product_delete_image">Remove this image?</string>
@@ -83,7 +150,108 @@
     <string name="v_add_product_quantity">Quantity:</string>
     <string name="v_add_product_descr_hint">Description</string>
     <string name="v_add_product_label">New product</string>
+    <string name="v_add_product_tag">Tag: </string>
 
     <!-- Vendor about product -->
     <string name="v_about_product_code">Code:</string>
+    <string name="v_about_product_tag">Tag:</string>
+
+    <!-- Customer goods -->
+    <string name="to_cart"> To cart</string>
+    <string name="from_cart"> From cart</string>
+    
+    <!-- Customer product fragment -->
+    <string name="reviews">reviews</string>
+    <string name="to_vendor">see vendor</string>
+    <string name="to_market">see market</string>
+    <string name="product_about">About</string>
+
+    <!-- Customer Vendor view fragment -->
+    <string name="vendor_about">About vendor</string>
+    <string name="vendor_markets">Markets</string>
+    <string name="str_name">Name: </string>
+    <string name="str_sname">Second name: </string>
+    <string name="str_surname">Surname: </string>
+    <string name="str_email">Email: </string>
+    <string name="str_vendor_info">Information about vendor: </string>
+    <string name="to_chat">To chat</string>
+    <string name="ask_start_new_chat">Start chat with this vendor?</string>
+
+    <!-- Cart -->
+    <string name="overall">Overall price</string>
+    <string name="make_order">Checkout</string>
+    <string name="cart_vendor">Vendor: </string>
+    
+    <!-- Order checkout -->
+    <string name="recipient">Recipient</string>
+    <string name="receive_way">Receive</string>
+    <string name="address_hint">Delivery address</string>
+    <string name="payment_type">Payment type</string>
+    <string name="comment">Comment</string>
+    <string name="delivery_courier">Courier delivery</string>
+    <string name="delivery_post">Postal delivery</string>
+    <string name="payment_cod">C.O.D.</string>
+    <string name="extras">Extras</string>
+    <string name="gift">Gift wrap</string>
+    <string name="urgent">Urgent</string>
+
+    <!-- Orders fragment -->
+    <string name="str_status">Status: </string>
+    <string name="str_vendor">Vendor: </string>
+    <string name="str_customer">Customer: </string>
+
+    <!-- Order fragment -->
+    <string name="deliver_to">Deliver to:</string>
+    <string name="get_by">get by:</string>
+    <string name="payment">Payment: </string>
+    <string name="payment_received">payment received</string>
+    <string name="pay">Perform payment</string>
+    <string name="set_payment_received">set payment received</string>
+    <string name="set_shipped">set shipped</string>
+    <string name="set_received">order received</string>
+    <string name="order_comments">Comments</string>
+    <string name="order_extra_price">price</string>
+    <string name="order_delivery">Delivery</string>
+    <string name="order_items">Items</string>
+    <string name="order_confirm">confirm order</string>
+    <string name="order_info">Description</string>
+    <string name="order_content">Content</string>
+    <string name="order_item_code">code: </string>
+    <string name="order_item_quantity">quantity: </string>
+
+    <!-- Admin market fragment -->
+    <string name="admin_market_set_approved">set status approved</string>
+    <string name="admin_market_set_blocked">set status blocked</string>
+
+    <!-- Admin All Comments fragment -->
+    <string name="admin_load_comments">Load all comments</string>
+    <string name="admin_delete_comment">Delete</string>
+    <string name="admin_view_chat">View chat</string>
+
+    <string name="admin_msg_delete_reason">Delete reason</string>
+
+    <!-- Messages fragment -->
+    <string name="message">Message</string>
+    <string name="msg_status_sending">sending</string>
+    <string name="msg_status_sent">sent</string>
+    <string name="msg_status_received">received</string>
+    <string name="msg_status_error">error</string>
+    <string name="msg_deleted">deleted (%s)</string>
+    <string name="admin_all_messages_deleted_mark">%s (deleted)</string>
+    <string name="admin_all_messages_by_content">By content</string>
+    <string name="admin_all_messages_by_time">By time</string>
+    <string name="admin_all_messages_deleted">Deleted</string>
+    <string name="admin_all_messages_undeleted">Not deleted</string>
+
+    <!-- Chats fragment -->
+    <string name="chat_me">me</string>
+    <string name="contact_admin">Admin</string>
+    <string name="available_admins">Available admins</string>
+
+    <!-- Settings -->
+    <string name="str_settings">Settings</string>
+    <string name="del_acc">delete account</string>
+    <string name="logout">log out</string>
+    <string name="confirm_del_acc">Are you sure, you wanna delete account?</string>
+    <string name="confirm_logout">Are you sure, you wanna  log out?</string>
 </resources>

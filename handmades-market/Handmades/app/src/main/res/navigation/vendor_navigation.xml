@@ -8,8 +8,8 @@
 
     <fragment
         android:id="@id/vendor_stores"
-        android:name="com.market.handmades.ui.vendor.StoresFragment"
-        android:label="@string/v_stores_title" >
+        android:name="com.market.handmades.ui.vendor.MarketFragment"
+        android:label="Магазины" >
         <action
             android:id="@+id/action_vendor_stores_to_marketFragment"
             app:destination="@id/marketFragment" />
@@ -18,19 +18,47 @@
             app:destination="@id/addMarketFragment" />
     </fragment>
     <fragment
+        android:id="@id/vendor_orders"
+        android:name="com.market.handmades.ui.vendor.OrdersFragment"
+        android:label="Мои заказы" >
+        <action
+            android:id="@+id/action_vendor_orders_to_orderViewFragmentV"
+            app:destination="@id/orderViewFragmentV" />
+    </fragment>
+    <fragment
         android:id="@+id/addMarketFragment"
         android:name="com.market.handmades.ui.vendor.AddMarketFragment"
-        android:label="AddMarketFragment" />
+        android:label="Добавить магазин" />
     <fragment
         android:id="@+id/marketFragment"
         android:name="com.market.handmades.ui.vendor.MarketFragment"
-        android:label="MarketFragment" >
+        android:label="О магазине" >
         <action
             android:id="@+id/action_marketFragment_to_aboutProductFragment"
             app:destination="@id/aboutProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutProductFragment"
-        android:name="com.market.handmades.ui.vendor.AboutProductFragment"
-        android:label="AboutProductFragment" />
+        android:name="com.market.handmades.ui.vendor.ProductViewFragment"
+        android:label="О товаре" />
+    <fragment
+        android:id="@id/vendor_settings"
+        android:name="com.market.handmades.ui.SettingsFragment"
+        android:label="Настройки" />
+    <fragment
+        android:id="@+id/orderViewFragmentV"
+        android:name="com.market.handmades.ui.vendor.OrderViewFragment"
+        android:label="Информация о заказе" />
+    <fragment
+        android:id="@id/vendor_messages"
+        android:name="com.market.handmades.ui.vendor.MessagesFragment"
+        android:label="Сообщения" >
+        <action
+            android:id="@+id/action_vendor_messages_to_chatFragment2"
+            app:destination="@id/chatFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment2"
+        android:name="com.market.handmades.ui.vendor.ChatFragment"
+        android:label="Чат" />
 </navigation>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/admin_navigation"
+    app:startDestination="@id/admin_markets">
+
+    <fragment
+        android:id="@id/admin_markets"
+        android:name="com.market.handmades.ui.admin.MarketsFragment"
+        android:label="MarketFragment" >
+        <action
+            android:id="@+id/action_admin_markets_to_marketViewFragment2"
+            app:destination="@id/marketViewFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/marketViewFragment2"
+        android:name="com.market.handmades.ui.admin.MarketViewFragment"
+        android:label="MarketViewFragment" >
+        <action
+            android:id="@+id/action_marketViewFragment2_to_productViewFragment"
+            app:destination="@id/productViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productViewFragment"
+        android:name="com.market.handmades.ui.admin.ProductViewFragment"
+        android:label="ProductViewFragment" />
+    <fragment
+        android:id="@id/admin_settings"
+        android:name="com.market.handmades.ui.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@id/admin_all_comments"
+        android:name="com.market.handmades.ui.admin.AllCommentsFragment"
+        android:label="AllCommentsFragment" >
+        <action
+            android:id="@+id/action_admin_all_comments_to_chatViewFragment"
+            app:destination="@id/chatViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatViewFragment"
+        android:name="com.market.handmades.ui.admin.ChatViewFragment"
+        android:label="ChatViewFragment" />
+    <fragment
+        android:id="@id/admin_products"
+        android:name="com.market.handmades.ui.admin.ProductsCommentsFragment"
+        android:label="ProductsCommentsFragment" >
+        <action
+            android:id="@+id/action_admin_products_to_productViewFragment"
+            app:destination="@id/productViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment3"
+        android:name="com.market.handmades.ui.admin.ChatFragment"
+        android:label="ChatFragment" />
+    <fragment
+        android:id="@id/admin_messages"
+        android:name="com.market.handmades.ui.admin.MessagesFragment"
+        android:label="MessagesFragment" >
+        <action
+            android:id="@+id/action_admin_messages_to_chatFragment3"
+            app:destination="@id/chatFragment3" />
+    </fragment>
+
+</navigation>

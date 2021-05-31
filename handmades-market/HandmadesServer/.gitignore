@@ -5,3 +5,4 @@ cert/private
 .eslintrc.yml
 *.log
 files
+.idea

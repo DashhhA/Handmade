@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="14dp"
+    android:foreground="?android:attr/selectableItemBackground">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TableLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="14dp"
+            android:layout_marginVertical="8dp">
+
+            <TableRow
+                android:layout_marginBottom="4dp">
+                <TextView
+                    android:id="@+id/user"
+                    android:textStyle="bold"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginEnd="4dp"
+                    style="@style/AppTheme.Text.StandardUI"/>
+                <TextView
+                    android:id="@+id/name"
+                    style="@style/AppTheme.Text.StandardUI"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/str_status"
+                    android:textStyle="bold"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginEnd="4dp"
+                    style="@style/AppTheme.Text.StandardUI"/>
+                <TextView
+                    android:id="@+id/status"
+                    style="@style/AppTheme.Text.StandardUI"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="14dp"
+            android:layout_marginEnd="14dp"
+            android:textColor="@color/mark"
+            android:gravity="center"
+            style="@style/AppTheme.Text.StandardUI"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

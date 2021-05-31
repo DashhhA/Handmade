@@ -32,6 +32,10 @@ module.exports = (() => {
         },
       },
       photoUrls: [String],
+      chatId: {
+        type: mongoose.ObjectId,
+      },
+      tag: String,
     });
 
     if (model !== undefined) return model;

@@ -7,6 +7,10 @@
         android:id="@+id/customer_goods"
         android:title="@string/goods"/>
     <item
+        android:id="@+id/customer_cart"
+        android:title="@string/cart"
+        android:icon="@drawable/baseline_shopping_cart_24"/>
+    <item
         android:id="@+id/customer_orders"
         android:title="@string/orders"/>
     <item
@@ -15,9 +19,6 @@
             <item
                 android:id="@+id/customer_messages"
                 android:title="@string/messages"/>
-            <item
-                android:id="@+id/customer_comments"
-                android:title="@string/comments"/>
         </menu>
     </item>
     <group

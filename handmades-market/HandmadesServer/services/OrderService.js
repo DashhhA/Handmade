@@ -14,16 +14,39 @@ class OrderService extends MongooseService {
    * @param {Customer} customer, made this order
    * @param {Vendor} vendor,owns products
    * @param {Chat} chat, Chat for this order
-   * @param {Array[Object]} products List of product id's and quantities
+   * @param {Array<Object>} products List of product id's and quantities
+   * @param {Date} time Time order was posted
+   * @param {String} address Address for delivery
+   * @param {String} paymentType Payment type
+   * @param {String} deliveryType Delivery type
+   * @param packing {Boolean} If package fo the order
+   * @param urgent {Boolean} If urgent order
    */
-  async save(customer, vendor, chat, products) {
+  async save(
+    customer,
+    vendor,
+    chat,
+    products,
+    time,
+    address,
+    paymentType,
+    deliveryType,
+    packing,
+    urgent,
+  ) {
     /* eslint-disable no-underscore-dangle */
     const order = {
       customerId: customer.userId,
       vendorId: vendor.userId,
       products,
+      time,
       status: orderStatus.posted,
+      address,
+      paymentType,
+      deliveryType,
       chatId: chat._id,
+      packing: { checked: packing },
+      urgent: { checked: urgent },
     };
     /* eslint-enable no-underscore-dangle */
 

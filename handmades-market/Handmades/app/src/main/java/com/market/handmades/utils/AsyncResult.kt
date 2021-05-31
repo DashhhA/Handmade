@@ -1,5 +1,6 @@
 package com.market.handmades.utils
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -26,6 +27,8 @@ sealed class AsyncResult<out R> {
     fun getOrShowError(context: Context): R? {
         return when (this) {
             is Error -> {
+                if (context is Activity)
+                    if (context.isFinishing) return null
                 val message = when(this.exception) {
                     is ServerMessage.LocalizedException -> this.exception.getLocalizedMessage(context)
                     else -> context.getString(com.market.handmades.R.string.error_internal)

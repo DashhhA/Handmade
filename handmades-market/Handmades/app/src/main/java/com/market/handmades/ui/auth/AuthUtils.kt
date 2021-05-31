@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.ViewGroup
+import com.market.handmades.AdminActivity
 import com.market.handmades.CustomerActivity
 import com.market.handmades.R
 import com.market.handmades.VendorActivity
@@ -53,30 +54,34 @@ object AuthUtils {
                             .show()
                     return@requestServer
                 }
-                when(userType) {
-                    User.UserType.Customer.dbName -> {
-                        val intent = Intent(context, CustomerActivity::class.java)
-                        context.startActivity(intent)
-                    }
-                    User.UserType.Vendor.dbName -> {
-                        val intent = Intent(context, VendorActivity::class.java)
-                        context.startActivity(intent)
-                    }
-                    User.UserType.Admin.dbName -> {
-                        //TODO
-                        // start activity for admin
-                    }
-                    User.UserType.Moderator.dbName -> {
-                        //TODO
-                        // start activity for moderator
-                    }
-                }
+                launchByUserType(context, User.UserType.fromString(userType))
             } else {
                 AlertDialog.Builder(context)
                         .setTitle(R.string.title_failure)
                         .setMessage(R.string.wrong_password)
                         .setPositiveButton(R.string.button_positive) { _, _, ->}
                         .show()
+            }
+        }
+    }
+
+    fun launchByUserType(context: Context, userType: User.UserType) {
+        when(userType) {
+            User.UserType.Customer -> {
+                val intent = Intent(context, CustomerActivity::class.java)
+                context.startActivity(intent)
+            }
+            User.UserType.Vendor -> {
+                val intent = Intent(context, VendorActivity::class.java)
+                context.startActivity(intent)
+            }
+            User.UserType.Admin -> {
+                val intent = Intent(context, AdminActivity::class.java)
+                context.startActivity(intent)
+            }
+            User.UserType.Moderator -> {
+                //TODO
+                // start activity for moderator
             }
         }
     }

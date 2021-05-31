@@ -1,10 +1,15 @@
 package com.market.handmades.model
 
+import android.content.Context
+import androidx.lifecycle.Observer
 import com.google.gson.*
+import com.market.handmades.R
 import com.market.handmades.remote.*
 import com.market.handmades.remote.watchers.DataWatcher
 import com.market.handmades.remote.watchers.ObjectWatcher
+import com.market.handmades.remote.watchers.SingleUpdateWatcher
 import com.market.handmades.utils.AsyncResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.coroutines.Continuation
@@ -19,14 +24,28 @@ class User(
     val userType: UserType,
     val modelId: String,
     val dbId: String,
+    private val dto: UserDTO,
 ) {
     sealed class UserType(
-            val dbName: String
+            val dbName: String,
+            val uiStrId: Int,
     ) {
-        object Customer: UserType("customer")
-        object Vendor: UserType("vendor")
-        object Admin: UserType("admin")
-        object Moderator: UserType("moderator")
+        companion object {
+            fun fromString(str: String): UserType {
+                return when(str) {
+                    Customer.dbName -> Customer
+                    Vendor.dbName -> Vendor
+                    Admin.dbName -> Admin
+                    Moderator.dbName -> Moderator
+                    else -> throw UnknownType
+                }
+            }
+        }
+
+        object Customer: UserType("customer", R.string.user_role_customer)
+        object Vendor: UserType("vendor", R.string.user_role_vendor)
+        object Admin: UserType("admin", R.string.user_role_admin)
+        object Moderator: UserType("moderator", R.string.user_role_moderator)
         object UnknownType: Exception("Unknown user type")
 
         override fun toString(): String {
@@ -34,19 +53,19 @@ class User(
         }
     }
 
-    sealed class ChangableFieds(propertyName: String, update: JsonPrimitive?){
+    sealed class ChangableFields(propertyName: String, update: JsonPrimitive?){
         val json = JsonObject()
         init {
             json.add(propertyName, update)
         }
         class fName(newVal: String):
-                ChangableFieds("fName", JsonPrimitive(newVal))
+                ChangableFields("fName", JsonPrimitive(newVal))
         class sName(newVal: String?):
-                ChangableFieds("sName", if(newVal != null) JsonPrimitive(newVal) else null)
+                ChangableFields("sName", if(newVal != null) JsonPrimitive(newVal) else null)
         class surName(newVal: String?):
-                ChangableFieds("surName", if(newVal != null) JsonPrimitive(newVal) else null)
+                ChangableFields("surName", if(newVal != null) JsonPrimitive(newVal) else null)
         class login(newVal: String):
-                ChangableFieds("login", JsonPrimitive(newVal))
+                ChangableFields("login", JsonPrimitive(newVal))
     }
 
     constructor(dto: UserDTO): this(
@@ -62,8 +81,13 @@ class User(
             else -> throw UserType.UnknownType
         },
         dto.modelId,
-        dto.dbId
+        dto.dbId,
+        dto
     )
+
+    fun asDTO(): UserDTO {
+        return dto
+    }
 
     /**
      * Formats user name full
@@ -71,6 +95,14 @@ class User(
     fun nameLong(): String {
         val name = "$fName ${sName ?: ""} ${surName ?: ""}"
         return name.replace("\\s+".toRegex(), " ").trimEnd()
+    }
+
+    /**
+     * Forms user name with role
+     */
+    fun strRole(context: Context): String {
+        val role = context.getString(userType.uiStrId)
+        return context.getString(R.string.user_role_form, nameLong(), role)
     }
 }
 
@@ -161,6 +193,24 @@ class UserRepository(
         }
     }
 
+    suspend fun getUser(id: String): AsyncResult<User> {
+        val sWatcher = SingleUpdateWatcher(watchUser(id))
+        return suspendCoroutine { continuation ->
+            var resumed = false
+            GlobalScope.launch(Dispatchers.Main) {
+                val lData = sWatcher.getData()
+                val observer = object : Observer<AsyncResult<User>> {
+                    override fun onChanged(t: AsyncResult<User>?) {
+                        lData.removeObserver(this)
+                        if (!resumed) continuation.resume(t!!)
+                        resumed = true
+                    }
+                }
+                lData.observeForever(observer)
+            }
+        }
+    }
+
     /**
      * Authorization
      * @return AsyncResult.Success(true) if authorized, AsyncResult.Success(false) if wrong password
@@ -197,7 +247,7 @@ class UserRepository(
         }
     }
 
-    suspend fun changeField(id: String, field: User.ChangableFieds): AsyncResult<Boolean> {
+    suspend fun changeField(id: String, field: User.ChangableFields): AsyncResult<Boolean> {
         val req = ServerRequest.EditItem(
                 ServerRequest.ModelType.User(id),
                 field.json
@@ -205,6 +255,19 @@ class UserRepository(
         return suspendCoroutine { continuation ->
             connection.requestServer(req) { res ->
                 continuation.resume(res.transform { it.success })
+            }
+        }
+    }
+
+    suspend fun getAvailableAdmins(): AsyncResult<List<User>> {
+        val req = ServerRequest.AvailableAdmins()
+        val res = connection.requestServer(req)
+
+        return res.transform { raw ->
+            val rawList = raw.data.get("data").asJsonArray
+            return@transform rawList.map { json ->
+                val dto = gson.fromJson(json, UserDTO::class.java)
+                return@map User(dto)
             }
         }
     }

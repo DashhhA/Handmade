@@ -19,6 +19,7 @@ abstract class ConnectionObject {
     private lateinit var marketRepository: MarketRepository
     private lateinit var orderRepository: OrderRepository
     private lateinit var productRepository: ProductRepository
+    private lateinit var chatRepository: ChatRepository
 
     protected fun onConnection(connection: Connection) {
         this.connection = connection
@@ -68,12 +69,18 @@ abstract class ConnectionObject {
         return productRepository
     }
 
+    suspend fun getChatRepository(): ChatRepository {
+        awaitConnection()
+        return chatRepository
+    }
+
     private fun initRepositories(connection: Connection) {
         userRepository = UserRepository(connection)
         productRepository = ProductRepository(connection)
         marketRepository = MarketRepository(connection, productRepository)
         orderRepository = OrderRepository(connection, userRepository, productRepository)
         customerRepository = CustomerRepository(connection, orderRepository)
-        vendorRepository = VendorRepository(connection, marketRepository, userRepository)
+        vendorRepository = VendorRepository(connection, marketRepository, userRepository, orderRepository)
+        chatRepository = ChatRepository(connection, userRepository)
     }
 }

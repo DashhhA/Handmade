@@ -15,23 +15,29 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.market.handmades.R
 import com.market.handmades.VendorViewModel
 import com.market.handmades.model.Product
+import com.market.handmades.model.ProductWP
 import com.market.handmades.remote.FileStream
 import com.market.handmades.remote.watchers.IWatcher
 import com.market.handmades.ui.CustomViewArrayAdapter
+import com.market.handmades.ui.ProductsFragment
+import com.market.handmades.ui.TintedProgressBar
 import com.market.handmades.utils.ConnectionActivity
+import com.market.handmades.utils.FilterProductIncludesWord
+import com.market.handmades.utils.FilterProductsIncludeTags
+import com.market.handmades.utils.FilterProductsPriceInterval
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MarketProductsFragment: Fragment() {
+class MarketProductsFragment: ProductsFragment() {
     private val viewModel: VendorViewModel by activityViewModels()
     private var productsWatcher: IWatcher<*>? = null
-    private val photos: MutableList<FileStream.FileDescription> = mutableListOf()
-    private val withPhotos: MutableLiveData<List<ProductWithPhoto>> = MutableLiveData()
+    private val withPhotos: MutableLiveData<List<ProductWP>> = MutableLiveData()
     companion object {
         const val titleId = R.string.market_products
         const val EXTRA_MARKET_ID = "marketId"
+        const val EXTRA_MARKET_TAGS = "tags"
         fun getInstance(): MarketProductsFragment {
             return MarketProductsFragment()
         }
@@ -50,6 +56,7 @@ class MarketProductsFragment: Fragment() {
         btnAddProduct.setOnClickListener {
             Intent(requireContext(), AddProductActivity::class.java).let {
                 it.putExtra(EXTRA_MARKET_ID, viewModel.selectedMarket?.dbId)
+                it.putExtra(EXTRA_MARKET_TAGS, viewModel.selectedMarket?.tags?.toTypedArray())
                 startActivity(it)
             }
         }
@@ -67,6 +74,8 @@ class MarketProductsFragment: Fragment() {
             adapter.update(it)
         }
 
+        val progress = TintedProgressBar(requireContext(), view as ViewGroup)
+        progress.show()
         GlobalScope.launch(Dispatchers.IO) {
             val selectedMarket = viewModel.selectedMarket ?: return@launch
             val marketRepository = ConnectionActivity.getMarketRepository()
@@ -75,6 +84,9 @@ class MarketProductsFragment: Fragment() {
 
             withContext(Dispatchers.Main) {
                 productsWatcher.getData().observe(viewLifecycleOwner) { res ->
+                    progress.hide()
+                    progress.remove()
+
                     val products = res.getOrShowError(requireContext()) ?: return@observe
                     GlobalScope.launch(Dispatchers.IO) {
                         withPhotos.postValue(products.map { newProductWPhoto(it) })
@@ -82,6 +94,19 @@ class MarketProductsFragment: Fragment() {
                 }
             }
         }
+
+        val filters = listOf<FilterItem<ProductWP>>(
+            FilterProductsPriceInterval(),
+            FilterProductsIncludeTags(),
+            FilterProductIncludesWord(),
+        )
+        val sorts = mapOf<String, (ProductWP, ProductWP) -> Int>(
+            getString(R.string.sort_by_name) to { p1, p2 -> p1.product.name.compareTo(p2.product.name) },
+            getString(R.string.sort_by_price_ascending) to { p1, p2 -> p1.product.price.compareTo(p2.product.price) },
+            getString(R.string.sort_by_price_descending) to { p1, p2 -> -p1.product.price.compareTo(p2.product.price) }
+        )
+
+        setUpListControl(adapter, filters, sorts)
     }
 
     override fun onDestroyView() {
@@ -90,26 +115,4 @@ class MarketProductsFragment: Fragment() {
             productsWatcher?.close()
         }
     }
-
-    private suspend fun newProductWPhoto(product: Product): ProductWithPhoto {
-        if (product.photoUrls.isEmpty())
-            return ProductWithPhoto(product, null)
-        val knownPhotos = photos.map { it.name }
-        val found = product.photoUrls.map { knownPhotos.indexOf(it) }
-        val ind = found.find { it > 0 }
-        if (ind != null)
-            return ProductWithPhoto(product, photos[ind])
-        val connection = ConnectionActivity.awaitConnection()
-        val res = connection.fileStream.getFile(product.photoUrls[0])
-        val newPhoto = res.getOrShowError(requireContext())
-
-        if (newPhoto != null) {
-            photos.add(newPhoto)
-            return ProductWithPhoto(product, newPhoto)
-        }
-
-        return ProductWithPhoto(product, null)
-    }
-
-    data class ProductWithPhoto(val product: Product, val photo: FileStream.FileDescription?)
 }

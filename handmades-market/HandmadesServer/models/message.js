@@ -18,6 +18,11 @@ module.exports = (() => {
         type: String,
         required: true,
       },
+      read: {
+        type: Boolean,
+        required: true,
+      },
+      deleted: String,
     });
 
     if (model !== undefined) return model;

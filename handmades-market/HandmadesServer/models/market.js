@@ -15,6 +15,10 @@ module.exports = (() => {
         type: String,
         required: true,
       },
+      city: {
+        type: String,
+        required: true,
+      },
       description: {
         type: String,
         required: true,
@@ -25,6 +29,7 @@ module.exports = (() => {
         enum: Object.values(status),
       },
       imageUrl: String,
+      tags: [String],
     });
 
     if (model !== undefined) return model;

@@ -1,4 +1,6 @@
 const status = require('../utils/OrderStatus');
+const paymentTypes = require('../controllers/RequestTypes').PAYMENT_TYPES;
+const deliveryTypes = require('../controllers/RequestTypes').DELIVERY_TYPES;
 
 module.exports = (() => {
   let model;
@@ -31,6 +33,39 @@ module.exports = (() => {
         required: true,
         enum: Object.values(status),
       },
+      time: {
+        type: Date,
+        required: true,
+      },
+      address: {
+        type: String,
+        required: true,
+      },
+      paymentType: {
+        type: String,
+        required: true,
+        enum: Object.values(paymentTypes),
+      },
+      deliveryType: {
+        type: String,
+        required: true,
+        enum: Object.values(deliveryTypes),
+      },
+      packing: {
+        checked: {
+          type: Boolean,
+          required: true,
+        },
+        price: Number,
+      },
+      urgent: {
+        checked: {
+          type: Boolean,
+          required: true,
+        },
+        price: Number,
+      },
+      deliveryPrice: Number,
       chatId: {
         type: mongoose.ObjectId,
       },

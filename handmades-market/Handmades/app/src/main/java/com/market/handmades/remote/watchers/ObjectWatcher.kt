@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
+import com.market.handmades.remote.ServerMessage
 import com.market.handmades.utils.AsyncResult
 import java.lang.Exception
 
@@ -24,7 +25,7 @@ abstract class ObjectWatcher <T> (
             state.value = when (result) {
                 is AsyncResult.Error -> result
                 is AsyncResult.Success -> when(result.data) {
-                    is Change.Delete -> AsyncResult.Error(Exception("Object deleted"))
+                    is Change.Delete -> AsyncResult.Error(ServerMessage.ObjectDeletedError())
                     is Change.Update -> AsyncResult.Success(result.data.element)
                 }
             }

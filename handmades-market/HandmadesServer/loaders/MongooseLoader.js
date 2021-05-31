@@ -11,6 +11,7 @@ const mongooseOptions = {
   useCreateIndex: true,
   useUnifiedTopology: true,
   replicaSet: process.env.DB_REPLICA_SET,
+  poolSize: 1e5,
 };
 
 module.exports = (() => new Promise((resolve, reject) => {

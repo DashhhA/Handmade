@@ -8,17 +8,12 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -28,7 +23,6 @@ import com.market.handmades.model.ProductDTO
 import com.market.handmades.remote.FileStream
 import com.market.handmades.remote.ServerRequest
 import com.market.handmades.ui.MessageProgressBar
-import com.market.handmades.ui.TintedProgressBar
 import com.market.handmades.utils.AsyncResult
 import com.market.handmades.utils.ConnectionActivity
 import com.market.handmades.utils.MTextWatcher
@@ -45,6 +39,7 @@ class AddProductActivity:  ConnectionActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vendor_add_product)
         marketId = intent.getStringExtra(MarketProductsFragment.EXTRA_MARKET_ID)
+        val tags = intent.getStringArrayExtra(MarketProductsFragment.EXTRA_MARKET_TAGS)
         if (marketId == null) {
             AlertDialog.Builder(this)
                     .setMessage(R.string.error_internal)
@@ -73,6 +68,13 @@ class AddProductActivity:  ConnectionActivity() {
         val price: EditText = findViewById(R.id.price)
         val quantity: EditText = findViewById(R.id.quantity)
         val description: EditText = findViewById(R.id.description)
+        val tag: Spinner = findViewById(R.id.tag)
+
+        tag.adapter = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            (tags ?: arrayOf()) + arrayOf(getString(R.string.str_none))
+        )
 
         btnCancel.setOnClickListener { finish() }
 
@@ -104,13 +106,17 @@ class AddProductActivity:  ConnectionActivity() {
                         it to FileStream.FileDescription(drawable)
                     } ?: listOf()).toMap()
 
+                    val selected = tag.selectedItem.toString()
+                    val t = if ( selected == getString(R.string.str_none)) null else selected
+
                     val product = ProductDTO(
                             marketId = market,
                             name = viewModel.name!!,
                             description = viewModel.description!!,
                             price = viewModel.price!!,
                             quantity = viewModel.quantity!!,
-                            photoUrls = photoUrls.values.map { it.name }
+                            photoUrls = photoUrls.values.map { it.name },
+                            tag = t
                     )
                     val pRes = connection.requestServer(ServerRequest.AddProduct(product))
                     pRes.getOrShowError(this@AddProductActivity)
@@ -122,7 +128,7 @@ class AddProductActivity:  ConnectionActivity() {
                         }
                     }
                     withContext(Dispatchers.Main) {
-                        progress.hide()
+                        progress.dismiss()
                         this@AddProductActivity.finish()
                     }
                 }

@@ -9,8 +9,9 @@ import android.os.IBinder
  * Service, holding the connection to server, independent from the activities
  */
 class ConnectionService : Service() {
-    private val binder: ConnectionBinder by lazy {
-        ConnectionBinder()
+
+    companion object {
+        private var binder: ConnectionBinder? = null
     }
 
     /**
@@ -32,6 +33,7 @@ class ConnectionService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder {
-        return binder
+        if (binder == null) binder = ConnectionBinder()
+        return binder!!
     }
 }

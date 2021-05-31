@@ -24,4 +24,8 @@ class MessageProgressBar(context: Context, message: String) {
     fun hide() {
         dialog.hide()
     }
+
+    fun dismiss() {
+        dialog.dismiss()
+    }
 }

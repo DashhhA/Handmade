@@ -6,14 +6,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.market.handmades.R
+import com.market.handmades.model.ProductWP
+import com.market.handmades.ui.ControllableAdapter
+import com.market.handmades.ui.ControllableAdapterA
 import com.market.handmades.ui.CustomViewArrayAdapter
 import com.market.handmades.ui.Utils
-
 class ProductArrayAdapter(context: Context):
-        CustomViewArrayAdapter<
-                Pair<MarketProductsFragment.ProductWithPhoto, MarketProductsFragment.ProductWithPhoto?>,
+        ControllableAdapterA<
+                ProductWP,
+                Pair<ProductWP, ProductWP?>,
                 ProductArrayAdapter.ViewHolder>
-        (context, R.layout.list_item_2_poduct_row) {
+        (context, R.layout.list_item_2_product_row) {
     var listener: IOnClickListener? = null
     inner class ViewHolder(
             val lImage: ImageView,
@@ -53,7 +56,7 @@ class ProductArrayAdapter(context: Context):
 
     override fun onGetView(
             holder: ViewHolder,
-            item: Pair<MarketProductsFragment.ProductWithPhoto, MarketProductsFragment.ProductWithPhoto?>,
+            item: Pair<ProductWP, ProductWP?>,
             position: Int) {
         setLeft(holder, item.first)
         if (item.second != null) setRight(holder, item.second!!)
@@ -61,24 +64,10 @@ class ProductArrayAdapter(context: Context):
     }
 
     fun interface IOnClickListener {
-        fun onClick(item: MarketProductsFragment.ProductWithPhoto)
+        fun onClick(item: ProductWP)
     }
 
-    fun update(items: List<MarketProductsFragment.ProductWithPhoto>){
-        val sorted = items.sortedWith { o1, o2 -> o1.product.name.compareTo(o2.product.name) }
-        val pairs: MutableList<Pair<MarketProductsFragment.ProductWithPhoto, MarketProductsFragment.ProductWithPhoto?>> = mutableListOf()
-        for ((i, itm) in sorted.withIndex()) {
-            if (i.rem(2) == 0) {
-                pairs.add(Pair(itm, null))
-            } else {
-                pairs[pairs.size - 1] = Pair(pairs[pairs.size - 1].first, itm)
-            }
-        }
-
-        update(pairs)
-    }
-
-    private fun setLeft(holder: ViewHolder, item: MarketProductsFragment.ProductWithPhoto) {
+    private fun setLeft(holder: ViewHolder, item: ProductWP) {
         val lPhoto = item.photo?.bitmap
         if (lPhoto != null)
             holder.lImage.setImageBitmap(lPhoto)
@@ -89,7 +78,7 @@ class ProductArrayAdapter(context: Context):
         holder.lPrice.text = Utils.printPrice(item.product.price)
     }
 
-    private fun setRight(holder: ViewHolder, item: MarketProductsFragment.ProductWithPhoto) {
+    private fun setRight(holder: ViewHolder, item: ProductWP) {
         holder.rCard.visibility = CardView.VISIBLE
         val rPhoto = item.photo?.bitmap
         if (rPhoto != null)
@@ -99,5 +88,18 @@ class ProductArrayAdapter(context: Context):
 
         holder.rName.text = item.product.name
         holder.rPrice.text = Utils.printPrice(item.product.price)
+    }
+
+    override fun addAll(items: Collection<ProductWP>) {
+        val pairs: MutableList<Pair<ProductWP, ProductWP?>> = mutableListOf()
+        for ((i, itm) in items.withIndex()) {
+            if (i.rem(2) == 0) {
+                pairs.add(Pair(itm, null))
+            } else {
+                pairs[pairs.size - 1] = Pair(pairs[pairs.size - 1].first, itm)
+            }
+        }
+
+        addAll(pairs)
     }
 }

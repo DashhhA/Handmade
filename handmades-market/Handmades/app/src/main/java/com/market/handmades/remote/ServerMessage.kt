@@ -116,6 +116,12 @@ class ServerMessage(
         }
     }
 
+    class ObjectDeletedError: LocalizedException("Object deleted") {
+        override fun getLocalizedMessage(context: Context): String {
+            return context.getString(R.string.object_deleted)
+        }
+    }
+
     abstract class LocalizedException(message: String): Exception(message) {
         abstract fun getLocalizedMessage(context: Context): String
     }

@@ -34,6 +34,7 @@ class TintedProgressBar {
         progressbarParams.addRule(RelativeLayout.CENTER_IN_PARENT)
         progressbar.layoutParams = progressbarParams
         layout.addView(progressbar)
+        layout.visibility = RelativeLayout.INVISIBLE
 
         root.addView(layout)
     }

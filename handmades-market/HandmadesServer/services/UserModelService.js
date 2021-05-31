@@ -28,7 +28,8 @@ class UserModelService extends MongooseService {
    */
   async watch(login) {
     // get required user id
-    const user = (await this.model.findOne({ login }));
+    let user = (await this.model.findOne({ login }));
+    if (user === null) user = await this.model.findById(login);
     if (user === null) return { changeStream: null, user };
     // filter out requested user
     const pipeline = [{ $match: { 'documentKey._id': user._id } }];

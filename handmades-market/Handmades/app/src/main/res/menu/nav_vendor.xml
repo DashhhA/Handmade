@@ -3,4 +3,13 @@
     <item
         android:id="@+id/vendor_stores"
         android:title="@string/vendor_stores"/>
+    <item
+        android:id="@+id/vendor_orders"
+        android:title="@string/vendor_orders"/>
+    <item
+        android:id="@+id/vendor_messages"
+        android:title="@string/messages"/>
+    <item
+        android:id="@+id/vendor_settings"
+        android:title="@string/str_settings"/>
 </menu>

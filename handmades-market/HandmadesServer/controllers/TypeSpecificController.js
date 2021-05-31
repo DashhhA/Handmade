@@ -36,6 +36,24 @@ function checkMakePurchase(body) {
       throw new SocketRequestError('"body.comment" must be a string');
     }
   }
+  if (!Object.prototype.hasOwnProperty.call(body, 'address')) {
+    throw new SocketRequestError('no "body.address" field');
+  }
+  if (!Object.prototype.hasOwnProperty.call(body, 'paymentType')) {
+    throw new SocketRequestError('no "body.paymentType" field');
+  }
+  if (!Object.prototype.hasOwnProperty.call(body, 'deliveryType')) {
+    throw new SocketRequestError('no "body.deliveryType" field');
+  }
+  if (!Object.prototype.hasOwnProperty.call(body, 'packing')) {
+    throw new SocketRequestError('no "body.packing" field');
+  }
+  if (!Object.prototype.hasOwnProperty.call(body, 'urgent')) {
+    throw new SocketRequestError('no "body.urgent" field');
+  }
+  if (!Object.prototype.hasOwnProperty.call(body, 'time')) {
+    throw new SocketRequestError('no "body.time" field');
+  }
 }
 
 function checkAddMarket(body) {
@@ -50,6 +68,12 @@ function checkAddMarket(body) {
   }
   if (typeof body.description !== 'string') {
     throw new SocketRequestError('"body.description" must be a string');
+  }
+  if (!Object.prototype.hasOwnProperty.call(body, 'city')) {
+    throw new SocketRequestError('no "body.city" field');
+  }
+  if (typeof body.city !== 'string') {
+    throw new SocketRequestError('"body.city" must be a string');
   }
   if (body.imageUrl !== undefined && typeof body.imageUrl !== 'string') {
     throw new SocketRequestError('"body.imageUrl" must be a string');
@@ -108,13 +132,28 @@ module.exports = (user, globalEvents, localEvents) => {
     switch (req.type) {
       case reqTypes.MAKE_PURCHASE: {
         checkMakePurchase(req.body);
+        const time = new Date(req.body.time);
+        if (Number.isNaN(time.valueOf())) {
+          throw new UnableException('Invalid date', req.id, { date: req.body.time });
+        }
         const body = {
           userId: user._id,
           products: req.body.products,
+          time,
           comment: req.body.comment,
+          address: req.body.address,
+          paymentType: req.body.paymentType,
+          deliveryType: req.body.deliveryType,
+          packing: req.body.packing,
+          urgent: req.body.urgent,
         };
         const data = formData(req, body);
         globalEvents.emit(events.EVENT_PURCHASE, data);
+        break;
+      }
+      case reqTypes.AVAILABLE_ADMINS: {
+        const data = formData(req, {});
+        globalEvents.emit(events.EVENT_AVAILABLE_ADMINS, data);
         break;
       }
       default:
@@ -133,7 +172,9 @@ module.exports = (user, globalEvents, localEvents) => {
         const body = {
           userId: user._id,
           name: req.body.name,
+          city: req.body.city,
           description: req.body.description,
+          tags: req.body.tags,
         };
         if (req.body.imageUrl !== undefined) body.imageUrl = req.body.imageUrl;
         const data = formData(req, body);
@@ -149,13 +190,35 @@ module.exports = (user, globalEvents, localEvents) => {
           quantity: req.body.quantity,
           price: req.body.price,
           photoUrls: req.body.photoUrls,
+          tag: req.body.tag,
         };
         const data = formData(req, body);
         globalEvents.emit(events.EVENT_ADD_PRODUCT, data);
         break;
       }
+      case reqTypes.AVAILABLE_ADMINS: {
+        const data = formData(req, {});
+        globalEvents.emit(events.EVENT_AVAILABLE_ADMINS, data);
+        break;
+      }
       default:
         throw new UnableException('User of type "Vendor" is not allowed to '
+          + `do this operation (${req.type})`);
+    }
+  }
+
+  /**
+   * @throws UnableException, SocketRequestError
+   */
+  function adminActions(req) {
+    switch (req.type) {
+      case reqTypes.WATCH_COMMENTS: {
+        const data = formData(req, {});
+        globalEvents.emit(events.EVENT_WATCH_COMMENTS, data);
+        break;
+      }
+      default:
+        throw new UnableException('User of type "Admin" is not allowed to '
           + `do this operation (${req.type})`);
     }
   }
@@ -165,6 +228,8 @@ module.exports = (user, globalEvents, localEvents) => {
       return customerActions;
     case userTypes.vendor:
       return vendorActions;
+    case userTypes.admin:
+      return adminActions;
     default:
       return () => {};
       // TODO unreachable

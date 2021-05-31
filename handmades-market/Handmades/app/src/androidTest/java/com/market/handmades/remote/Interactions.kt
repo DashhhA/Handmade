@@ -2,6 +2,7 @@ package com.market.handmades.remote
 
 import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
+import com.market.handmades.CustomerViewModel
 import com.market.handmades.model.*
 import com.market.handmades.model.CustomerRepository
 import com.market.handmades.model.UserRepository
@@ -37,6 +38,7 @@ class Interactions {
     private val customerRepository: CustomerRepository
     private val vendorRepository: VendorRepository
     private val marketRepository: MarketRepository
+    private val orderRepository: OrderRepository
     init {
         appContext = InstrumentationRegistry.getInstrumentation().targetContext
         val connection = Connection(appContext)
@@ -44,7 +46,7 @@ class Interactions {
         userRepository = UserRepository(connection)
         val productRepository = ProductRepository(connection)
         marketRepository = MarketRepository(connection, productRepository)
-        val orderRepository = OrderRepository(connection, userRepository, productRepository)
+        orderRepository = OrderRepository(connection, userRepository, productRepository)
         customerRepository = CustomerRepository(connection, orderRepository)
         vendorRepository = VendorRepository(connection, marketRepository, userRepository)
     }
@@ -126,7 +128,7 @@ class Interactions {
                     }
                 } }
                 marketResult = GlobalScope.async {
-                    marketRepository.addMarket("mrkt", "dscrptn")
+                    marketRepository.addMarket("mrkt", "C", "dscrptn", listOf())
                 }
             }
 

@@ -235,7 +235,7 @@ module.exports = (() => {
 
       const { changeStream, chats } = await modelService.watchUserChats(userId);
       changeStream.on('change', (next) => {
-        const resp = response.onModelUpdated(id, next.documentKey._id, next.operationType);
+        const resp = response.onModelUpdated(id, next.fullDocument, next.operationType);
         localEvents.emit(events.EVENT_RESPONSE, resp);
       });
       changeStreams.set(id, changeStream);
@@ -244,7 +244,7 @@ module.exports = (() => {
         changeStreams.delete(id);
       });
       // send all current list items
-      const resp = response.onModelUpdated(id, chats.map((el) => el._id), 'refresh');
+      const resp = response.onModelUpdated(id, chats, 'refresh');
       localEvents.emit(events.EVENT_RESPONSE, resp);
     });
 
@@ -300,10 +300,22 @@ module.exports = (() => {
 
     globalEvents.on(events.EVENT_PURCHASE, async (data) => {
       const {
-        id, eventEmitter: localEvents, userId, products, comment,
+        id,
+        eventEmitter: localEvents,
+        userId,
+        products,
+        time,
+        comment,
+        address,
+        paymentType,
+        deliveryType,
+        packing,
+        urgent,
       } = data;
       try {
-        const order = await modelService.newOrder(userId, products);
+        const order = await modelService.newOrder(
+          userId, products, time, address, paymentType, deliveryType, packing, urgent,
+        );
         if (comment !== undefined) {
           await modelService.newMessage(new Date(), userId, order.chatId, comment);
         }
@@ -346,11 +358,18 @@ module.exports = (() => {
 
     globalEvents.on(events.EVENT_ADD_MARKET, async (data) => {
       const {
-        id, eventEmitter: localEvents, userId, name, description, imageUrl,
+        id, eventEmitter: localEvents, userId, name, city, description, imageUrl, tags,
       } = data;
 
       try {
-        const market = await modelService.newMarket(userId, name, description, imageUrl);
+        const market = await modelService.newMarket(
+          userId,
+          name,
+          city,
+          description,
+          imageUrl,
+          tags,
+        );
         const resp = response.onSuccessWithData(id, { marketId: market._id });
         localEvents.emit(events.EVENT_RESPONSE, resp);
       } catch (e) {
@@ -378,6 +397,7 @@ module.exports = (() => {
         quantity,
         price,
         photoUrls,
+        tag,
       } = data;
 
       const descr = {
@@ -386,6 +406,7 @@ module.exports = (() => {
         quantity,
         price,
         photoUrls,
+        tag,
       };
       try {
         const product = await modelService.newProduct(marketId, descr);
@@ -404,6 +425,40 @@ module.exports = (() => {
           );
         }
       }
+    });
+
+    globalEvents.on(events.EVENT_WATCH_COMMENTS, async (data) => {
+      const { id, eventEmitter: localEvents } = data;
+
+      try {
+        const { changeStream, messages } = await modelService.watchComments();
+        changeStream.on('change', (next) => {
+          const resp = response.onModelUpdated(id, next.fullDocument, next.operationType);
+          localEvents.emit(events.EVENT_RESPONSE, resp);
+        });
+        changeStream.on('error', (e) => {
+          localEvents.emit(events.EVENT_REJECT, new UnknownException(e, id));
+          changeStreams.delete(id);
+        });
+        changeStreams.set(id, changeStream);
+        localEvents.on(events.EVENT_SOCKET_CLOSED, () => {
+          changeStream.close();
+          changeStreams.delete(id);
+        });
+        // send all current list items
+        const resp = response.onModelUpdated(id, messages, 'refresh');
+        localEvents.emit(events.EVENT_RESPONSE, resp);
+      } catch (e) {
+        localEvents.emit(events.EVENT_REJECT, new UnknownException(e, id));
+      }
+    });
+
+    globalEvents.on(events.EVENT_AVAILABLE_ADMINS, async (data) => {
+      const { id, eventEmitter: localEvents } = data;
+
+      const admins = await modelService.getAdmins();
+      const resp = response.onSuccessWithData(id, admins);
+      localEvents.emit(events.EVENT_RESPONSE, resp);
     });
   };
 })();

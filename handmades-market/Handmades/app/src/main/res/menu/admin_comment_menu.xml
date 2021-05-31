@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/delete"
+        android:title="@string/admin_delete_comment"/>
+
+    <item
+        android:id="@+id/to_chat"
+        android:title="@string/admin_view_chat"/>
+</menu>

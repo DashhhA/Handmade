@@ -18,18 +18,22 @@ class MarketService extends MongooseService {
 
   /**
    * Creates instance of market in the DB
-   * @param {ObjectId} vandorId id of the vendor
+   * @param {ObjectId} vendorId id of the vendor
+   * @param {string} city Market city
    * @param {string} name Name of the market
    * @param {string} description Description of the market
    * @param {string | undefined} imageUrl Location og the image
+   * @param {Array<string>} tags Tags for the market products
    */
-  async save(vendorId, name, description, imageUrl) {
+  async save(vendorId, name, city, description, imageUrl, tags) {
     const descr = {
       vendorId,
       products: [],
       name,
+      city,
       description,
       status: statuses.validating,
+      tags,
     };
     if (imageUrl !== undefined) descr.imageUrl = imageUrl;
     const saved = await this.trySave(descr);

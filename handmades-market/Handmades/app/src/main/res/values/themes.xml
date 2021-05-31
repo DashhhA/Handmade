@@ -22,6 +22,14 @@
         <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
 
+    <style name="Theme.Handmades.MenuItem" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">24dp</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
     <style name="AppTheme.Text.StandardUI" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/teal_dark</item>
         <item name="android:textSize">14sp</item>

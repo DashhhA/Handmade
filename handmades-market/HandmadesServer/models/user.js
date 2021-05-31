@@ -36,7 +36,7 @@ module.exports = (() => {
       },
       modelId: {
         type: mongoose.ObjectId,
-        required: true,
+        // required: true,
       },
     });
     if (model !== undefined) return model;

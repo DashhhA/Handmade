@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Handmades</string>
+
+    <!-- General strings -->
+    <string name="str_cancel">Отмена</string>
+    <string name="str_submit">Отправить</string>
+    <string name="str_positive">OK</string>
+    <string name="rubbles">p.</string>
+    <string name="str_should_not_empty">Поле должно быть заполнено</string>
+    <string name="str_yes">ДА</string>
+    <string name="str_none">нет</string>
+    <string name="str_unknown_price">\???</string>
+    <string name="str_sort">Сортировка</string>
+    <string name="str_filter">Фильтр</string>
+
+    <string name="sort_by_name">По Имени</string>
+    <string name="selected_filters">Выбранные фильтры</string>
+    <string name="add_filter">Добавить фильтр</string>
+    <string name="filter_approved">Одобрен</string>
+    <string name="filter_blocked">Заблокирован</string>
+    <string name="filter_validating">На проверке</string>
+    <string name="filter_by_city">По городу</string>
+    <string name="filter_city">Город: %s</string>
+
+    <string name="market_status_validating">на проверке</string>
+    <string name="market_status_approved">одобрен</string>
+    <string name="market_status_blocked">заблокирован</string>
+
+    <string name="order_status_posted">создан</string>
+    <string name="order_status_await_pay">ожидание платежа</string>
+    <string name="order_status_paid">оплачен</string>
+    <string name="order_status_shipped">отправлен</string>
+    <string name="order_status_delivered">доставлен</string>
+
+    <string name="user_role_customer">покупатель</string>
+    <string name="user_role_vendor">продавец</string>
+    <string name="user_role_admin">администратор</string>
+    <string name="user_role_moderator">модератор</string>
+    <string name="user_role_form">%s (%s)</string>
+
+    <string name="error_wrong_response">Неправильный ответ сервера</string>
+    <string name="error_dup_key">Пользователь уже существует</string>
+    <string name="error_dup_key_key">Пользователь с таким %s уже существует</string>
+    <string name="error_user_unauthorized">Пользователь не авторизован</string>
+    <string name="error_unknown_server">Неизвестная ошибка сервера</string>
+    <string name="error_unknown_connection">Ошибка подключения: \n%s</string>
+    <string name="error_no_user">Нет такого пользователя</string>
+    <string name="dup_key_login">логин</string>
+    <string name="error_internal">Внутренняя ошибка</string>
+    <string name="title_failure">Неудача</string>
+    <string name="object_deleted">Объект был удален</string>
+
+    <!-- Info dialogs -->
+    <string name="title_error">Ошибка</string>
+    <string name="no_connection">Нет подключения к серверу</string>
+    <string name="button_positive">OK</string>
+
+    <!-- Log in -->
+    <string name="login_title">Вход</string>
+    <string name="login_log_in">войти в аккаунт</string>
+    <string name="new_acc">создать новый аккаунт</string>
+    <string name="hint_email">Почта</string>
+    <string name="hint_password">Пароль</string>
+    <string name="remember_me">запомнить меня</string>
+    <string name="create_acc">Создать аккаунт</string>
+    <string name="login_checking">Выполняется вход</string>
+    <string name="wrong_password">Неверный пароль</string>
+
+    <!-- New user -->
+    <string name="new_usr_title">Новый аккаунт</string>
+    <string name="new_usr_name">Имя</string>
+    <string name="new_usr_sname">Отчество</string>
+    <string name="new_usr_surname">Фамилия</string>
+    <string name="new_user_type">Тип аккаунта:</string>
+    <string name="new_usr_email">Почта</string>
+    <string name="new_usr_password">Пароль</string>
+    <string name="new_usr_confirm_pass">Подтверждение пароля</string>
+    <string name="new_user_password_error">Пароль должен быть не короче 5 символов</string>
+    <string name="new_user_empty_error">Поле не должно быть пустым</string>
+    <string name="new_usr_create">Создать аккаунт</string>
+    <string name="error_passwords_mismatch">Пароли должны совпадать</string>
+    <string name="error_email">Неправильная почта</string>
+
+    <!-- Customer menu -->
+    <string name="stores">Магазины</string>
+    <string name="goods">Товары</string>
+    <string name="orders">Заказы</string>
+    <string name="messages">Сообщения</string>
+    <string name="comments">Комментарии</string>
+    <string name="settings">Настройки</string>
+    <string name="info">Информация</string>
+    <string name="social">Social</string>
+    <string name="cart">Корзина</string>
+
+    <!-- Vendor menu -->
+    <string name="vendor_stores">Мои магазины</string>
+    <string name="vendor_orders">Заказы</string>
+
+    <!-- Admin menu -->
+    <string name="admin_stores">Магазины</string>
+
+    <!-- Vendor stores fragment -->
+    <string name="v_stores_title">Магазины</string>
+    <string name="v_stores_status">статус: </string>
+
+    <!-- Vendor add market fragment -->
+    <string name="v_add_market_name_hint">Название</string>
+    <string name="v_add_market_city_hint">Город</string>
+    <string name="v_add_market_descr_prompt">Описание магазина</string>
+    <string name="v_add_market_tags">Тэги</string>
+    <string name="v_add_market_edit_tags_title">Добавить категории</string>
+    <string name="v_add_market_add_tag_title">Добавить тэг</string>
+    <string name="v_add_market_name_empty">Название не должно быть пустым</string>
+    <string name="v_add_market_city_empty">Город не должен быть пустым</string>
+    <string name="v_add_market_descr_empty">Описание не должно быть пустым</string>
+
+    <!-- Vendor market fragment -->
+    <string name="market_products">Товары</string>
+    <string name="market_about">Описание</string>
+    <string name="market_location">Местоположение: </string>
+
+    <!-- Vendor add product activity -->
+    <string name="v_add_product_delete_image">Убрать это изображение?</string>
+    <string name="v_add_product_name_hint">Название</string>
+    <string name="v_add_product_price">Цена:</string>
+    <string name="v_add_product_quantity">Количество:</string>
+    <string name="v_add_product_descr_hint">Описание</string>
+    <string name="v_add_product_label">Новый товар</string>
+    <string name="v_add_product_tag">Тэг: </string>
+
+    <!-- Vendor about product -->
+    <string name="v_about_product_code">Артикул:</string>
+
+    <!-- Customer goods -->
+    <string name="to_cart"> В корзину</string>
+    <string name="from_cart"> Из корзины</string>
+
+    <!-- Customer product fragment -->
+    <string name="reviews">отзывы</string>
+    <string name="to_vendor">посмотреть продавца</string>
+    <string name="to_market">посмотреть магазин</string>
+    <string name="product_about">Описание</string>
+
+    <!-- Customer Vendor view fragment -->
+    <string name="vendor_about">Про продавца</string>
+    <string name="vendor_markets">Магазины</string>
+    <string name="str_name">Имя: </string>
+    <string name="str_sname">Отчество: </string>
+    <string name="str_surname">Фамилия: </string>
+    <string name="str_email">Почта: </string>
+    <string name="str_vendor_info">Информация о продавце: </string>
+    <string name="to_chat">К диалогу</string>
+    <string name="ask_start_new_chat">Начать диалог с этим продавцом?</string>
+
+    <!-- Cart -->
+    <string name="overall">Итого</string>
+    <string name="make_order">Создать</string>
+    <string name="cart_vendor">Продавец: </string>
+
+    <!-- Order checkout -->
+    <string name="recipient">Получатель</string>
+    <string name="receive_way">Получить</string>
+    <string name="address_hint">Адрес доставки</string>
+    <string name="payment_type">Тип платежа</string>
+    <string name="comment">Комментарий</string>
+    <string name="delivery_courier">Доставка курьером</string>
+    <string name="delivery_post">Доставка почтой</string>
+    <string name="payment_cod">Наложенный платеж</string>
+    <string name="extras">Дополнительно</string>
+    <string name="gift">Подарочная упаковка</string>
+    <string name="urgent">Срочный</string>
+
+    <!-- Orders fragment -->
+    <string name="str_status">Статус: </string>
+    <string name="str_vendor">Продавец: </string>
+    <string name="str_customer">Покупатель: </string>
+
+    <!-- Order fragment -->
+    <string name="deliver_to">Доставить по адресу:</string>
+    <string name="get_by">получить:</string>
+    <string name="payment">Оплата: </string>
+    <string name="payment_received">платеж получен</string>
+    <string name="pay">Совершить платеж</string>
+    <string name="set_payment_received">оплата получена</string>
+    <string name="set_shipped">отправлен</string>
+    <string name="set_received">заказ получен</string>
+    <string name="order_comments">Комментарии</string>
+    <string name="order_extra_price">цена</string>
+    <string name="order_delivery">Доставка</string>
+    <string name="order_items">Товары</string>
+    <string name="order_confirm">подтвердить заказ</string>
+    <string name="order_info">Описание</string>
+    <string name="order_content">Содержимое</string>
+    <string name="order_item_code">артикул: </string>
+    <string name="order_item_quantity">количество: </string>
+
+    <!-- Admin market fragment -->
+    <string name="admin_market_set_approved">Одобрить</string>
+    <string name="admin_market_set_blocked">Заблокировать</string>
+
+    <!-- Messages fragment -->
+    <string name="message">Сообщение</string>
+    <string name="msg_status_sending">отправка</string>
+    <string name="msg_status_sent">отправлено</string>
+    <string name="msg_status_received">получено</string>
+    <string name="msg_status_error">ошибка</string>
+
+    <!-- Settings -->
+    <string name="str_settings">Настройки</string>
+    <string name="del_acc">удалить аккаунт</string>
+    <string name="logout">выход</string>
+    <string name="confirm_del_acc">Вы уверены, что хотите удалить аккаунт?</string>
+    <string name="confirm_logout">Вы уверены, что хотите выйти?</string>
+</resources>

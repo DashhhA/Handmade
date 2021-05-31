@@ -9,20 +9,22 @@ import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.market.handmades.R
 import com.market.handmades.VendorActivity
 import com.market.handmades.VendorViewModel
+import com.market.handmades.model.MarketRaw
+import com.market.handmades.ui.ListFragment
 import com.market.handmades.ui.TintedProgressBar
-import com.market.handmades.utils.ConnectionActivity
+import com.market.handmades.ui.customer.MarketsListAdapter
+import com.market.handmades.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class StoresFragment : Fragment() {
-    val vendorViewModel: VendorViewModel by activityViewModels()
+class StoresFragment : ListFragment<MarketRaw>() {
+    private val vendorViewModel: VendorViewModel by activityViewModels()
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -41,24 +43,37 @@ class StoresFragment : Fragment() {
             navigation.navigate(R.id.action_vendor_stores_to_addMarketFragment)
         }
 
-        val marketsListAdapter = MarketsListAdapter(requireContext())
+        val marketsListAdapter = MarketsArrayAdapter(requireContext())
         val marketsList: ListView = view.findViewById(R.id.markets_list)
         marketsList.adapter = marketsListAdapter
         val progress = TintedProgressBar(requireContext(), view as ViewGroup)
         progress.show()
         GlobalScope.launch(Dispatchers.IO) {
-            val marketsData = VendorActivity.getSynchronizedData().markets
             withContext(Dispatchers.Main) {
                 marketsList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                     vendorViewModel.selectedMarket = marketsListAdapter.getItem(position) ?: return@OnItemClickListener
                     navigation.navigate(R.id.action_vendor_stores_to_marketFragment)
                 }
-                marketsData.observe(viewLifecycleOwner) { markets ->
+                vendorViewModel.markets.observe(viewLifecycleOwner) { markets ->
                     progress.hide()
                     progress.remove()
                     marketsListAdapter.update(markets)
                 }
             }
         }
+
+        val filters = listOf(
+            FilterMarketsApproved(),
+            FilterMarketsBlocked(),
+            FilterMarketsValidating(),
+            FilterMarketsCity(),
+            FiltersMarketIncludesWord()
+        )
+
+        val sorts: Map<String, (MarketRaw, MarketRaw) -> Int> = mapOf(
+            getString(R.string.sort_by_name) to { o1, o2 -> o1.name.compareTo(o2.name) },
+        )
+
+        setUpListControl(marketsListAdapter, filters, sorts)
     }
 }

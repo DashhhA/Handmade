@@ -9,14 +9,11 @@ import android.widget.ArrayAdapter
 abstract class CustomViewArrayAdapter<T, ViewHolderType>
 private constructor(
         context: Context,
-        private val objects: MutableList<T>,
+        protected val objects: MutableList<T>,
         private val viewResource: Int,
 ): ArrayAdapter<T>(context, viewResource, objects) {
     constructor(context: Context, viewResource: Int): this(context, mutableListOf(), viewResource)
-    private val mInflater: LayoutInflater
-    init {
-        mInflater = LayoutInflater.from(context)
-    }
+    private val mInflater: LayoutInflater = LayoutInflater.from(context)
 
     abstract fun onGetView(holder: ViewHolderType, item: T, position: Int)
     abstract fun getViewHolderInstance(view: View, position: Int): ViewHolderType
@@ -38,15 +35,5 @@ private constructor(
         onGetView(holder, item, position)
 
         return rowView
-    }
-
-    fun removeByFilter(filter: (T) -> Boolean) {
-        objects.removeAll(filter)
-        notifyDataSetChanged()
-    }
-
-    open fun update(items: Collection<T>) {
-        clear()
-        addAll(items)
     }
 }

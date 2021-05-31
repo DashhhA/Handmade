@@ -1,6 +1,7 @@
 module.exports = {
   posted: 'posted',
-  processing: 'processing',
+  awaitPayment: 'awaiting_payment',
+  paid: 'paid',
   shipped: 'shipped',
   delivered: 'delivered',
 };

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginHorizontal="14dp"
+        android:stretchColumns="0,1">
+
+        <TextView
+            style="@style/AppTheme.Text.StandardUI"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="@string/str_vendor_info"/>
+        <TableRow>
+            <TextView
+                android:text="@string/str_name"
+                style="@style/AppTheme.Text.StandardUI"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/AppTheme.Text.StandardUI"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/str_sname"
+                style="@style/AppTheme.Text.StandardUI"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/sname"
+                style="@style/AppTheme.Text.StandardUI"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/str_surname"
+                style="@style/AppTheme.Text.StandardUI"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/surname"
+                style="@style/AppTheme.Text.StandardUI"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/str_email"
+                style="@style/AppTheme.Text.StandardUI"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/email"
+                style="@style/AppTheme.Text.StandardUI"/>
+        </TableRow>
+
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.market.handmades.utils
 
+import android.app.ActivityManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -59,4 +60,11 @@ abstract class ConnectionActivity: AppCompatActivity() {
         // Unbind from the service
         unbindService(serviceConnection)
     }
+
+    /* private fun <T>isServiceRunning(serviceClass: Class<T>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        return manager.getRunningServices(Int.MAX_VALUE).any { service ->
+            serviceClass.name == service.service.className
+        }
+    } */
 }

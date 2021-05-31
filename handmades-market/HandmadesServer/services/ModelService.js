@@ -45,6 +45,8 @@ class ModelService {
         return this.orders;
       case 'message':
         return this.messages;
+      case modelTypes.market:
+        return this.markets;
       default:
         throw new Error(`No soch model "${name}"`);
         // TODO error, unreachable
@@ -147,7 +149,7 @@ class ModelService {
     return this.products.watch(id);
   }
 
-  async newOrder(userId, products) {
+  async newOrder(userId, products, time, address, paymentType, deliveryType, packing, urgent) {
     // check, that all products are from same vendor
     const codes2quant = new Map();
     products.forEach((el) => codes2quant.set(el.code, el.quantity));
@@ -190,8 +192,19 @@ class ModelService {
       };
     });
 
-    const chat = await this.chats.save(chatTypes.comment, []);
-    const saved = await this.orders.save(customer, vendor, chat, productsToSave);
+    const chat = await this.chats.save(chatTypes.comments, []);
+    const saved = await this.orders.save(
+      customer,
+      vendor,
+      chat,
+      productsToSave,
+      time,
+      address,
+      paymentType,
+      deliveryType,
+      packing,
+      urgent,
+    );
     await this.customers.addOrder(customer._id, saved._id);
     await this.vendors.addOrder(vendorId, saved._id);
     return saved;
@@ -201,10 +214,12 @@ class ModelService {
    * Creates and saves new market
    * @param {ObjectId} userId of the user, created market
    * @param {string} name Name of the market
+   * @param {string} city Market city
    * @param {string} description Market description
    * @param {string | undefined} imageUrl Location og the image
+   * @param {Array<string>} tags Tags for the market products
    */
-  async newMarket(userId, name, description, imageUrl) {
+  async newMarket(userId, name, city, description, imageUrl, tags) {
     const user = await this.users.getById(userId);
     if (user === null) {
       throw new MarketException('No soch user');
@@ -213,7 +228,7 @@ class ModelService {
     if (vendor === null) {
       throw new MarketException(`Vendor for user ${user.login} not found`);
     }
-    const saved = await this.markets.save(vendor._id, name, description, imageUrl);
+    const saved = await this.markets.save(vendor._id, name, city, description, imageUrl, tags);
     await this.vendors.addMarket(vendor._id, saved._id);
     return saved;
   }
@@ -228,8 +243,10 @@ class ModelService {
     if (market === null) {
       throw new ProductException('No soch market');
     }
+    const chat = await this.chats.save(chatTypes.comments, []);
     const description = {
       marketId: market._id,
+      chatId: chat._id,
       ...descr,
     };
     const product = await this.products.save(description);
@@ -281,7 +298,7 @@ class ModelService {
    */
   async newMessage(time, from, chat, body) {
     const descr = {
-      time, from, chat, body,
+      time, from, chat, body, read: false,
     };
     const saved = await this.chats.newMessage(descr);
     return saved;
@@ -301,11 +318,33 @@ class ModelService {
         const ans = await this.markets.watchList(path);
         return ans;
       }
+      case modelTypes.product: {
+        const ans = await this.products.watchList(path);
+        return ans;
+      }
+      case modelTypes.order: {
+        const ans = await this.orders.watchList(path);
+        return ans;
+      }
       default:
         // TODO warning to console. Unreachable, checked in
         // AuthorizedUserController.js
         return { changeStream: null, list: null };
     }
+  }
+
+  watchComments() {
+    return this.messages.watchComments();
+  }
+
+  async getAdmins() {
+    const admins = await this.users.model.aggregate([
+      { $match: { userType: userTypes.admin } },
+      { $addFields: { dbId: '$_id' } },
+      { $project: { _id: 0, __v: 0 } },
+    ]);
+
+    return admins;
   }
 
   /**

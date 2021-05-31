@@ -9,6 +9,7 @@ class PrivateChatError extends Error { }
 /**
  * @description Returns a function, to check if user is in this chat
  * @param {Chat} chat Chat
+ * @param {ObjectId} userId Id of user to check
  * @return {(chat: Chat) => boolean} Function, checking if user is in this chat
  */
 function selectCheckUserByChat(chat, userId) {
@@ -16,7 +17,7 @@ function selectCheckUserByChat(chat, userId) {
     case reqTypes.CHAT_TYPES.comments:
       return () => true;
     case reqTypes.CHAT_TYPES.private:
-      return (c) => c.users.includes(userId);
+      return (c) => c.users.find((id) => id.equals(userId));
     default:
       // TODO: unreachable
       return () => false;
@@ -121,8 +122,15 @@ class ChatService extends MongooseService {
         $match: {
           'fullDocument.users': id,
         },
-      }];
-    const changeStream = this.model.watch(pipeline);
+      },
+      {
+        $addFields: {
+          'fullDocument.dbId': '$fullDocument._id',
+        },
+      },
+    ];
+    const options = { fullDocument: 'updateLookup' };
+    const changeStream = this.model.watch(pipeline, options);
 
     return { changeStream, chats };
   }
@@ -197,6 +205,14 @@ class ChatService extends MongooseService {
       throw new PrivateChatError('No soch user');
     }
     const message = await this.messages.trySave(descr);
+    await this.model.updateOne({ _id: descr.chat }, {
+      $set: {
+        recent: {
+          message,
+          user: user._id,
+        },
+      },
+    });
     return message;
   }
 }

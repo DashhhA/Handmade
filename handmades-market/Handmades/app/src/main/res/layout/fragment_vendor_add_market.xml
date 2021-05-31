@@ -42,6 +42,16 @@
                 android:inputType="textShortMessage" />
 
             <EditText
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="12dp"
+                android:hint="@string/v_add_market_city_hint"
+                android:gravity="center"
+                android:inputType="textShortMessage" />
+
+            <EditText
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,6 +62,13 @@
                 android:maxHeight="400dp"
                 android:inputType="textMultiLine" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_tags"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="24dp"
+            android:layout_height="wrap_content"
+            android:text="@string/v_add_market_tags"/>
 
         <LinearLayout
             android:layout_width="match_parent"

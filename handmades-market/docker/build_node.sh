@@ -1,3 +1,3 @@
 #!/bin/bash
 cd ../HandmadesServer
-sudo docker build -t handmades_node -f ../docker/DockerfileNode .
+sudo docker build -t danmakarov/handmades_node:0.0.2-testing -f ../docker/DockerfileNode .

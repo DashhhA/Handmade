@@ -41,7 +41,9 @@ class AboutMarketFragment: Fragment() {
 
         val image: ImageView = view.findViewById(R.id.image)
         val name: TextView = view.findViewById(R.id.name)
+        val city: TextView = view.findViewById(R.id.city)
         val description: TextView = view.findViewById(R.id.description)
+        val tags: TextView = view.findViewById(R.id.tags)
 
         val progress = TintedProgressBar(requireContext(), view as ViewGroup)
         progress.show()
@@ -63,7 +65,11 @@ class AboutMarketFragment: Fragment() {
                     else image.setImageResource(R.drawable.placeholder)
 
                     name.text = market.name
+                    city.text = market.city
                     description.text = market.description
+                    tags.text = if (market.tags.isNotEmpty()) {
+                        market.tags.reduce { acc, s -> "$acc, $s" }
+                    } else getString(R.string.str_none)
                 }
             }
         }

@@ -47,4 +47,6 @@ module.exports = {
   EVENT_ADD_PRODUCT: 'add_product',
   EVENT_EDIT_ITEM: 'edit_tem',
   EVENT_SOCKET_CLOSED: 'socket_closed',
+  EVENT_WATCH_COMMENTS: 'watch_comments',
+  EVENT_AVAILABLE_ADMINS: 'available_admins',
 };

@@ -21,12 +21,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CustomerActivity"/>
-        <activity android:name=".VendorActivity"/>
+        <activity
+            android:name=".CustomerActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".VendorActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".AdminActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:label="@string/v_add_product_label"
             android:name=".ui.vendor.AddProductActivity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:windowSoftInputMode="adjustPan"
+            android:name=".ui.messages.ChatActivity"/>
         <service android:name=".remote.ConnectionService"/>
     </application>
 

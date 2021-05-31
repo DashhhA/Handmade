@@ -1,6 +1,7 @@
 package com.market.handmades.remote
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
@@ -10,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.*
+import java.lang.Exception
 import java.net.ConnectException
 import java.net.Socket
 import java.security.KeyStore
@@ -105,8 +107,9 @@ class JSONStreamReader(
         parenthesesBalance += openParentheses - closedParentheses
         currentObject.append(str)
         if (parenthesesBalance == 0) {
-            onJSONText(currentObject.toString())
+            val rem = parseJSONStr(currentObject.toString())
             currentObject.clear()
+            if (rem.isNotBlank()) currentObject.append(rem)
         }
     }
 
@@ -114,8 +117,12 @@ class JSONStreamReader(
         try {
             val obj = gson.fromJson(jsonText, ServerResponse::class.java)
             onResponse.onResponse(AsyncResult.Success(obj))
+            Log.v("I", jsonText)
         } catch (exception: JsonSyntaxException) {
             onResponse.onResponse(AsyncResult.Error(exception))
+        } catch (e: Exception) {
+            // TODO find error
+            Log.v("E", e.message?:"")
         }
     }
 
@@ -138,5 +145,41 @@ class JSONStreamReader(
                 continuation.resume(exception)
             })
         }
+    }
+
+    /**
+     * Calls onJSONText for each separate JSON token in passed string, and returns the rest of the
+     * string
+     * @param str String to parse
+     * @return No - JSON remainder
+     * @see onJSONText
+     */
+    private fun parseJSONStr(str: String): String {
+        var isString = false
+        var isEscape = false
+        var balance = 0
+        var jsonStr = ""
+        for (c in str) {
+            if (!isString) {
+                if (c == '{') balance += 1
+                if (c == '}') balance -= 1
+                if (c == '"') isString = true
+            } else {
+                if (!isEscape) {
+                    if (c == '"') isString = false
+                    if (c == '\\') isEscape = true
+                } else {
+                    isEscape = false
+                }
+            }
+
+            jsonStr += c
+            if (balance == 0 && jsonStr.isNotBlank()) {
+                onJSONText(jsonStr)
+                jsonStr = ""
+            }
+        }
+
+        return jsonStr
     }
 }

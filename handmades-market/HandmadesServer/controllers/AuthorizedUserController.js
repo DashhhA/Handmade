@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const reqTypes = require('./RequestTypes');
 const emitterEvents = require('../utils/events');
 const { SocketRequestError, UnableException } = require('../utils/errors');
-const responses = require('./ResponseGenerator');
 const typeSpecific = require('./TypeSpecificController');
 
 // TODO put request id and localEvents to evqnt data authomatically

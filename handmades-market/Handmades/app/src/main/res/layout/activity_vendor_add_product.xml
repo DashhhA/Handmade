@@ -57,6 +57,24 @@
                 android:inputType="number"
                 android:layout_span="2"/>
         </TableRow>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/v_add_product_tag"
+                style="@style/AppTheme.Text.StandardUI"/>
+            <Spinner
+                android:id="@+id/tag"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/AppTheme.Text.StandardUI" />
+        </LinearLayout>
+
         <EditText
             android:id="@+id/description"
             android:layout_marginTop="12dp"

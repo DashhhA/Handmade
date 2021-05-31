@@ -13,12 +13,14 @@ module.exports = {
   CURRENT_USER: 'current',
   WATCH_CHAT: 'watch_chat',
   WATCH_CHATS: 'watch_chats',
+  WATCH_COMMENTS: 'watch_comments',
   NEW_CHAT: 'new_chat',
   MESSAGE: 'message',
   MAKE_PURCHASE: 'make_purchase',
   ADD_MARKET: 'add_market',
   ADD_PRODUCT: 'add_product',
   EDIT_ITEM: 'edit_item',
+  AVAILABLE_ADMINS: 'available_admins',
   MODEL_TYPES: {
     user: 'user',
     customer: 'customer',
@@ -30,5 +32,12 @@ module.exports = {
   CHAT_TYPES: {
     private: 'private',
     comments: 'comments',
-  }
+  },
+  PAYMENT_TYPES: {
+    cod: 'COD',
+  },
+  DELIVERY_TYPES: {
+    post: 'post',
+    courier: 'courier',
+  },
 };

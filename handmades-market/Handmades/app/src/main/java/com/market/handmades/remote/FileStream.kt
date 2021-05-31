@@ -16,6 +16,9 @@ import java.util.*
 import javax.net.ssl.SSLSocket
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import kotlin.math.ceil
+import kotlin.math.round
+import kotlin.math.sqrt
 
 class FileStream(
         private val hostDescription: HostDescription,
@@ -54,18 +57,16 @@ class FileStream(
                     Thread.sleep(10)
                     return awaitFIleSize()
                 }
-                val s = recv.decodeToString(0, c)
                 return recv.decodeToString(0, c).toInt()
             }
             fun awaitFile(size: Int): ByteArray {
                 val bytes = ByteArray(size)
                 var offset = 0
-                var  c = 0
+                var  c: Int
                 while (offset < size) {
-                    c = input.read(bytes, offset, size)
+                    c = input.read(bytes, offset, size - offset)
                     offset += c
                 }
-                val v = size - offset
                 return bytes
                 // else throw IOException("Error receiving file")
             }
@@ -148,11 +149,24 @@ class FileStream(
             BitmapFactory.decodeByteArray(data, 0, data.size)
         }
         companion object {
+            private const val MAX_BYTES = 1e6
             private fun drawableToByteArray(drawable: Drawable): ByteArray {
                 val bitmap = drawable.toBitmap()
                 val stream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                val scaled = scaleBitmap(bitmap)
+                scaled.compress(Bitmap.CompressFormat.PNG, 100, stream)
                 return  stream.toByteArray()
+            }
+
+            private fun scaleBitmap(bitmap: Bitmap): Bitmap {
+                val relation = MAX_BYTES.toFloat() / bitmap.byteCount.toFloat()
+                if (relation >= 1f) return bitmap
+                return Bitmap.createScaledBitmap(
+                        bitmap,
+                        round(bitmap.width * sqrt(relation)).toInt(),
+                        round(bitmap.height * sqrt(relation)).toInt(),
+                        true
+                )
             }
         }
         constructor(name: String, drawable: Drawable): this(name, drawableToByteArray(drawable))

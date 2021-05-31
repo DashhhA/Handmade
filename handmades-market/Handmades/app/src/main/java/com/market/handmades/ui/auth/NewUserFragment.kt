@@ -41,8 +41,8 @@ class NewUserFragment: Fragment() {
 
         // maps user types to their representations for spinner
         val userTypes: Map<User.UserType, String> = mapOf(
-                User.UserType.Customer to "Customer",
-                User.UserType.Vendor to "Vendor"
+                User.UserType.Customer to "Покупатель",
+                User.UserType.Vendor to "Продавец"
         )
 
         // get references to UI elements

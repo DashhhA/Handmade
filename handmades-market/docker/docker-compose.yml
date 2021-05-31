@@ -7,9 +7,10 @@ services:
           - "8042:8042"
           - "8043:8043"
         links:
-          - "mongo:mongodb"
+          - mongo
     mongo:
         container_name: mongo_handmades
-        image: handmades_mongo
+        image: mongo
+        entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
         ports:
           - '27017:27017'

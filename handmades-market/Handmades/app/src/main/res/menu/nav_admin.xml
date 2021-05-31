@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/admin_markets"
+        android:title="@string/admin_stores"/>
+    <item
+        android:id="@+id/admin_all_comments"
+        android:title="@string/admin_all_comments"/>
+    <item
+        android:id="@+id/admin_products"
+        android:title="@string/admin_products" />
+    <item
+        android:id="@+id/admin_messages"
+        android:title="@string/messages" />
+    <item
+        android:id="@+id/admin_settings"
+        android:title="@string/str_settings"/>
+</menu>

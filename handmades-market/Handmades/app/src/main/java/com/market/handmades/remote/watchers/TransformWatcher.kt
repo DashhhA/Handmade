@@ -4,13 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.market.handmades.utils.AsyncResult
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 /**
  * Watcher, that transforms given result
  */
 class TransformWatcher <T, R> (
-        base: IWatcher<T>,
+        private val base: IWatcher<T>,
         transform: (T) -> IWatcher<R>
 ): IWatcher<R> {
     private val state: MediatorLiveData<AsyncResult<R>> = MediatorLiveData()
@@ -34,7 +36,12 @@ class TransformWatcher <T, R> (
     }
 
     override suspend fun close(): AsyncResult<Boolean> {
-        return watcher?.close() ?: AsyncResult.Success(true)
+        val closed = listOf(
+            GlobalScope.async { watcher?.close() },
+            GlobalScope.async { base.close() }
+        ).awaitAll()
+        closed.forEach { if (it is AsyncResult.Error) return it }
+        return AsyncResult.Success(true)
     }
 
     override fun getData(): LiveData<AsyncResult<R>> {

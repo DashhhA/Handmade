@@ -27,6 +27,7 @@ class IdListWatcher <T> (
             new.forEach { newElement(it) }
             removed.forEach { elementDeleted(it) }
             updates += new.size + removed.size
+            if (updates == 0) update()
         }
 
         override fun insert(el: String) {
@@ -60,7 +61,7 @@ class IdListWatcher <T> (
     }
 
     private fun update() {
-        state.value = AsyncResult.Success(elements.values.toList())
+        state.postValue(AsyncResult.Success(elements.values.toList()))
     }
 
     private fun error(err: Exception) {
@@ -70,7 +71,7 @@ class IdListWatcher <T> (
     private fun update(key: String, value: T) {
         elements[key] = value
         updates -= 1
-        if (updates == 0) update()
+        if (updates < 1) update()
     }
 
     private fun remove(key: String) {

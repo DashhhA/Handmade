@@ -60,6 +60,21 @@
 
         <TableRow
             android:layout_marginTop="15dp">
+
+            <TextView
+                style="@style/AppTheme.Text.StandardUI"
+                android:gravity="center"
+                android:text="@string/v_add_product_tag" />
+
+            <TextView
+                android:id="@+id/tag"
+                style="@style/AppTheme.Text.StandardUI"
+                android:layout_span="2"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="15dp">
             <TextView
                 style="@style/AppTheme.Text.StandardUI"
                 android:gravity="center"

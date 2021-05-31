@@ -17,8 +17,10 @@ import kotlin.coroutines.suspendCoroutine
  * Class, responsible of establishing a connection to server, sending and receiving data
  * through session
  */
-const val SERVER_HOST = "10.0.2.2"
-// const val SERVER_HOST = "20.82.161.101"
+//const val SERVER_HOST = "192.168.1.15"
+//const val SERVER_HOST = "10.0.2.2"
+//const val SERVER_HOST = "192.168.0.103"
+const val SERVER_HOST = "20.82.177.236"
 const val SERVER_PORT = 8042
 const val FILES_PORT = 8043
 class Connection(
